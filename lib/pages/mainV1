@@ -1,0 +1,201 @@
+import 'package:flutter/material.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'QuickLinker',
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+      ),
+      home: HomePage(),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  String email="";
+   final formkey=GlobalKey<FormState>();
+    final scaffoldkey=GlobalKey<ScaffoldState>();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: scaffoldkey,
+      appBar: AppBar(
+        title: Text('QuickLinker'),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            UserAccountsDrawerHeader(
+              accountName: Text('John Doe'),
+              accountEmail: Text('johndoe@example.com'),
+              currentAccountPicture: CircleAvatar(
+                child: Icon(Icons.person),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.work),
+              title: Text('Professional Profile'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfessionalProfilePage()),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text('Personal Profile'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PersonalProfilePage()),
+                );
+              },
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.logout),
+              title: Text('Logout'),
+              onTap: () {
+                Navigator.pop(context);
+                // Add code here to handle logout functionality
+              },
+            ),
+          ],
+        ),
+      ),
+      body: Center(
+        child: Container(
+          margin: const EdgeInsets.all(20),
+            child :Form(
+              key: formkey,
+              child: Column(
+                  children: [
+                    Container( 
+                      margin: const EdgeInsets.all(10),
+
+                      child: TextFormField( 
+                      
+                          decoration: const InputDecoration(
+                          labelText: 'num',
+                          
+                          border: OutlineInputBorder()
+                          
+                      ),
+
+                              validator: (value) { 
+                                if (value==null || value.isEmpty){
+                                    return 'Veuillez remplir le champ';
+
+                                }
+                              
+                              
+                              },
+                              
+                    ),
+                     ),
+
+                    Container( 
+                      margin: const EdgeInsets.all(10),
+                      child: TextFormField( 
+                      
+                      decoration: const InputDecoration(
+                          labelText: 'Prenom',
+                          
+                          border: OutlineInputBorder()
+                      ),
+
+
+
+                    ),
+                     ),
+                    
+
+                    Container( 
+                      margin: const EdgeInsets.all(10),
+                      child: TextFormField( 
+                      
+                      decoration: const InputDecoration(
+                          labelText: 'email',
+                          
+                          border: OutlineInputBorder()
+                      ),
+
+
+
+                    ),
+                     ),
+
+                  ElevatedButton(
+                        
+                        onPressed: () {
+                          if (formkey.currentState!.validate()){
+
+                             ScaffoldMessenger.of(context).showSnackBar(
+
+                                const SnackBar(content: Text("envoi"))
+
+                             );
+                             
+                             
+                                         }
+
+
+
+
+                         },
+                        child: const Text('qr code')
+                        
+                        
+                        ),
+                  
+
+                  ],
+
+
+              ),
+
+            )
+
+
+        )
+
+
+      ),
+    );
+  }
+}
+
+class ProfessionalProfilePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Professional Profile'),
+      ),
+      body: Center(
+        child: Text('Professional Profile Page'),
+      ),
+    );
+  }
+}
+
+class PersonalProfilePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Personal Profile'),
+      ),
+      body: Center(
+        child: Text('Personal Profile Page'),
+      ),
+    );
+  }
+}
